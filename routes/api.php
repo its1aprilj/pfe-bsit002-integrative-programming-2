@@ -3,8 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\EmployeeController;
-
+use App\Http\Controllers\Api\EmployeeController;
 
 // =========================
 // STUDENT API
