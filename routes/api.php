@@ -3,10 +3,12 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Api\EmployeeController;
+use App\Http\Controllers\EmployeeController;
 
 
+// =========================
 // STUDENT API
+// =========================
 
 // GET ALL STUDENTS
 Route::get('/students', function () {
@@ -84,7 +86,9 @@ Route::delete('/students/{student_id}', function ($student_id) {
 });
 
 
+// =========================
 // EMPLOYEE API
+// =========================
 
 Route::get('/employees', [EmployeeController::class, 'index']);
 
