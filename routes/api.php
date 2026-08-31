@@ -3,13 +3,17 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
+
+use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\EmployeeController;
 
-// =========================
-// STUDENT API
-// =========================
+// PUBLIC AUTHENTICATION ROUTES
+// REGISTER
+Route::post('/register', [AuthController::class, 'register']);
+// LOGIN
+Route::post('/login', [AuthController::class, 'login']);
 
-// GET ALL STUDENTS
+// STUDENT API GET ALL STUDENTS
 Route::get('/students', function () {
     $students = DB::table('student')->get();
 
@@ -85,16 +89,23 @@ Route::delete('/students/{student_id}', function ($student_id) {
 });
 
 
-// =========================
-// EMPLOYEE API
-// =========================
 
-Route::get('/employees', [EmployeeController::class, 'index']);
+// PROTECTED ROUTES Requires Sanctum Token
 
-Route::post('/employees', [EmployeeController::class, 'store']);
+Route::middleware('auth:sanctum')->group(function () {
 
-Route::get('/employees/{id}', [EmployeeController::class, 'show']);
+    // LOGOUT
+    Route::post('/logout', [AuthController::class, 'logout']);
 
-Route::put('/employees/{id}', [EmployeeController::class, 'update']);
+    // EMPLOYEE CRUD
+    Route::get('/employees', [EmployeeController::class, 'index']);
 
-Route::delete('/employees/{id}', [EmployeeController::class, 'destroy']);
+    Route::post('/employees', [EmployeeController::class, 'store']);
+
+    Route::get('/employees/{id}', [EmployeeController::class, 'show']);
+
+    Route::put('/employees/{id}', [EmployeeController::class, 'update']);
+
+    Route::delete('/employees/{id}', [EmployeeController::class, 'destroy']);
+
+});
